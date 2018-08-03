@@ -8,5 +8,5 @@ class SnakeApp(App):
 
     def build(self):
         game = SnakeGame()
-        Clock.schedule_interval(game.update, 1.0 / 3.0)
+        Clock.schedule_interval(game.update, 1.0 / 5.0)
         return game
