@@ -2,10 +2,14 @@
 
 <Score>
     size_hint: None, None
-    size: 20, 20
+    text_size: root.width, None
     text: "0"
     color: 1, 1, 1, 0.4
     font_size: 50
+    halign: "center"
+    text_size: root.size
+    valign: "top"
+    halign: "right"
 
 <Sock>
     size_hint: None, None
@@ -56,4 +60,4 @@
     Score:
         id: score_
         right: root.right - 10
-        top: root.top - 20
+        top: root.top

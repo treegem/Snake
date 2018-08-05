@@ -115,6 +115,8 @@ class SnakeGame(FloatLayout):
             if self.sock_snacked():
                 self.expand_snake = True
                 self.sock.spawn()
+                self.score.score += 1
+                self.score.text = str(self.score.score)
             if self.expand_snake:
                 self.add_body_part()
             if self.collision():
