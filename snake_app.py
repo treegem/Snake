@@ -5,6 +5,7 @@ from snake_game import SnakeGame
 
 
 class SnakeApp(App):
+    title = 'Sweet Georgie Brown\'s Snek Game'
 
     def build(self):
         game = SnakeGame()
