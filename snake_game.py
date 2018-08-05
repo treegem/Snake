@@ -4,10 +4,12 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.vector import Vector
 
 from snake import Snake
+from sock import Sock
 
 
 class SnakeGame(FloatLayout):
     head = ObjectProperty(Snake)
+    socks = ObjectProperty(Sock)
     body = []
 
     def __init__(self):
@@ -36,9 +38,9 @@ class SnakeGame(FloatLayout):
         elif keycode[1] == 'left' and vx < 1:
             self.next_dir = Vector(-1, 0)
         elif keycode[1] == 'e':
-            self.food_snacked()
+            self.sock_snacked()
 
-    def food_snacked(self):
+    def sock_snacked(self):
         self.expand_snake = True
 
     def _on_keyboard_closed(self):

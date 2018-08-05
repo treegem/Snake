@@ -1,5 +1,14 @@
 #:kivy 1.10.1
 
+<Sock>
+    size_hint: None, None
+    size: 20, 20
+    canvas:
+        Color:
+            rgba: 1, 0.1, 0.1, 0.6
+        Ellipse:
+            pos: self.pos
+            size: self.size
 
 <Snake>:
     size_hint: None, None
@@ -13,6 +22,7 @@
 
 <SnakeGame>:
     head: snake_
+    sock: sock_
 
     height: 600
     width: 800
@@ -30,4 +40,7 @@
         x: root.center_x
         y: root.center_y
 
-
+    Sock:
+        id: sock_
+        x: 400
+        y: 300
