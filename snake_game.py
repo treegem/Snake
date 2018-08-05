@@ -18,6 +18,7 @@ class SnakeGame(FloatLayout):
         self.history_pos = [(self.head.pos[0], self.head.pos[1])]
         self.history_v = [self.head.v]
         self.next_dir = self.head.v
+        self.sock.spawn()
 
         # Init keyboard
         self._keyboard = Window.request_keyboard(
