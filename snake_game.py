@@ -1,8 +1,9 @@
 from kivy.core.window import Window
-from kivy.properties import ObjectProperty, NumericProperty
+from kivy.properties import ObjectProperty
 from kivy.uix.floatlayout import FloatLayout
 from kivy.vector import Vector
 
+from score import Score
 from snake import Snake
 from sock import Sock
 
@@ -10,6 +11,7 @@ from sock import Sock
 class SnakeGame(FloatLayout):
     head = ObjectProperty(Snake)
     sock = ObjectProperty(Sock)
+    score = ObjectProperty(Score)
     body = []
 
     def __init__(self):
@@ -31,7 +33,6 @@ class SnakeGame(FloatLayout):
 
     def _on_key_down(self, keyboard, keycode, text, modifiers):
         vx, vy = self.head.v
-        print(keycode[1])
         if keycode[1] == 'up' and vy > -1:
             self.next_dir = Vector(0, 1)
         elif keycode[1] == 'right' and vx > -1:
@@ -41,16 +42,17 @@ class SnakeGame(FloatLayout):
         elif keycode[1] == 'left' and vx < 1:
             self.next_dir = Vector(-1, 0)
         elif keycode[1] == 'spacebar':
-            self.head.pos = self.center
-            self.next_dir = Vector(1, 0)
-            for snek in self.body:
-                self.remove_widget(snek)
-            self.body = []
-            self.history_pos = [(self.head.pos[0], self.head.pos[1])]
-            self.history_v = [self.head.v]
-            self.crashed = False
-        elif keycode[1] == 'e':
-            self.crashed = True
+            self.restart_game()
+
+    def restart_game(self):
+        self.head.pos = self.center
+        self.next_dir = Vector(1, 0)
+        for snek in self.body:
+            self.remove_widget(snek)
+        self.body = []
+        self.history_pos = [(self.head.pos[0], self.head.pos[1])]
+        self.history_v = [self.head.v]
+        self.crashed = False
 
     def on_width(self, instance, value):
         self.sock.update_grid_width(value)
