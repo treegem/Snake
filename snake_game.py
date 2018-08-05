@@ -1,5 +1,5 @@
 from kivy.core.window import Window
-from kivy.properties import ObjectProperty
+from kivy.properties import ObjectProperty, NumericProperty
 from kivy.uix.floatlayout import FloatLayout
 from kivy.vector import Vector
 
@@ -27,9 +27,11 @@ class SnakeGame(FloatLayout):
         self._keyboard.bind(on_key_down=self._on_key_down)
 
         self.expand_snake = False
+        self.crashed = False
 
     def _on_key_down(self, keyboard, keycode, text, modifiers):
         vx, vy = self.head.v
+        print(keycode[1])
         if keycode[1] == 'up' and vy > -1:
             self.next_dir = Vector(0, 1)
         elif keycode[1] == 'right' and vx > -1:
@@ -38,10 +40,17 @@ class SnakeGame(FloatLayout):
             self.next_dir = Vector(0, -1)
         elif keycode[1] == 'left' and vx < 1:
             self.next_dir = Vector(-1, 0)
+        elif keycode[1] == 'spacebar':
+            self.head.pos = self.center
+            self.next_dir = Vector(1, 0)
+            for snek in self.body:
+                self.remove_widget(snek)
+            self.body = []
+            self.history_pos = [(self.head.pos[0], self.head.pos[1])]
+            self.history_v = [self.head.v]
+            self.crashed = False
         elif keycode[1] == 'e':
-            self.sock_snacked()
-        elif keycode[1] == 'f':
-            self.sock.spawn()
+            self.crashed = True
 
     def on_width(self, instance, value):
         self.sock.update_grid_width(value)
@@ -50,7 +59,7 @@ class SnakeGame(FloatLayout):
         self.sock.update_grid_height(value)
 
     def sock_snacked(self):
-        self.expand_snake = True
+        return self.head.pos == self.sock.pos
 
     def _on_keyboard_closed(self):
         self._keyboard.unbind(on_key_down=self._on_keyboard_down)
@@ -81,14 +90,30 @@ class SnakeGame(FloatLayout):
     def body_move(self):
         if len(self.body) > 0:
             for i, snek in enumerate(self.body):
-                snek.v = self.history_v[i+1]
+                snek.v = self.history_v[i + 1]
                 snek.move()
 
+    def collision(self):
+        if self.head.x < self.x or self.head.right > self.right:
+            return True
+        if self.head.y < self.y or self.head.top > self.top:
+            return True
+        for snek in self.body:
+            if self.head.pos == snek.pos:
+                return True
+        return False
+
     def update(self, dt):
-        self.update_history_pos()
-        self.update_head_v()
-        self.head.move()
-        self.body_move()
-        self.update_history_v()
-        if self.expand_snake:
-            self.add_body_part()
+        if not self.crashed:
+            self.update_history_pos()
+            self.update_head_v()
+            self.head.move()
+            self.body_move()
+            self.update_history_v()
+            if self.sock_snacked():
+                self.expand_snake = True
+                self.sock.spawn()
+            if self.expand_snake:
+                self.add_body_part()
+            if self.collision():
+                self.crashed = True

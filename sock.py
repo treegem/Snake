@@ -19,4 +19,3 @@ class Sock(Widget):
     def spawn(self):
         self.pos = Vector(randint(0, self.grid_width - 1) * Snake.width.defaultvalue,
                           randint(0, self.grid_height - 1) * Snake.height.defaultvalue)
-        print(self.pos)
