@@ -53,6 +53,7 @@ class SnakeGame(FloatLayout):
         self.history_pos = [(self.head.pos[0], self.head.pos[1])]
         self.history_v = [self.head.v]
         self.crashed = False
+        self.score.text = "0"
 
     def on_width(self, instance, value):
         self.sock.update_grid_width(value)
