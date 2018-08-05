@@ -9,7 +9,7 @@ from sock import Sock
 
 class SnakeGame(FloatLayout):
     head = ObjectProperty(Snake)
-    socks = ObjectProperty(Sock)
+    sock = ObjectProperty(Sock)
     body = []
 
     def __init__(self):
@@ -39,6 +39,14 @@ class SnakeGame(FloatLayout):
             self.next_dir = Vector(-1, 0)
         elif keycode[1] == 'e':
             self.sock_snacked()
+        elif keycode[1] == 'f':
+            self.sock.spawn()
+
+    def on_width(self, instance, value):
+        self.sock.update_grid_width(value)
+
+    def on_height(self, instance, value):
+        self.sock.update_grid_height(value)
 
     def sock_snacked(self):
         self.expand_snake = True

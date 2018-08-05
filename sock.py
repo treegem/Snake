@@ -10,9 +10,13 @@ class Sock(Widget):
         super().__init__(**kwargs)
         self.grid_width, self.grid_height = 0, 0
 
-    def on_parent(self, widget, parent):
-        self.grid_width = int(self.parent.width / Snake.width.defaultvalue)
-        self.grid_height = int(self.parent.height / Snake.height.defaultvalue)
+    def update_grid_width(self, value):
+        self.grid_width = int(value / Snake.width.defaultvalue)
 
-    def spawn(self, ):
-        self.pos = Vector(randint(0, self.grid_width), randint(0, self.grid_height))
+    def update_grid_height(self, value):
+        self.grid_height = int(value / Snake.height.defaultvalue)
+
+    def spawn(self):
+        self.pos = Vector(randint(0, self.grid_width - 1) * Snake.width.defaultvalue,
+                          randint(0, self.grid_height - 1) * Snake.height.defaultvalue)
+        print(self.pos)
