@@ -1,3 +1,4 @@
+from kivy.properties import NumericProperty
 from kivy.uix.widget import Widget
 from kivy.vector import Vector
 
