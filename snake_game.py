@@ -17,8 +17,8 @@ class SnakeGame(FloatLayout):
     def __init__(self):
         super().__init__()
 
-        self.history_pos = [(self.head.pos[0], self.head.pos[1])]
-        self.history_v = [self.head.v]
+        self.history_pos, self.history_v = None, None
+        self.reset_histories()
         self.next_dir = self.head.v
         self.sock.spawn()
 
@@ -47,13 +47,19 @@ class SnakeGame(FloatLayout):
     def restart_game(self):
         self.head.pos = self.center
         self.next_dir = Vector(1, 0)
+        self.reset_body()
+        self.reset_histories()
+        self.crashed = False
+        self.score.reset()
+
+    def reset_body(self):
         for snek in self.body:
             self.remove_widget(snek)
         self.body = []
+
+    def reset_histories(self):
         self.history_pos = [(self.head.pos[0], self.head.pos[1])]
         self.history_v = [self.head.v]
-        self.crashed = False
-        self.score.text = "0"
 
     def on_width(self, instance, value):
         self.sock.update_grid_width(value)
