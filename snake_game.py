@@ -6,12 +6,14 @@ from kivy.vector import Vector
 from score import Score
 from snake import Snake
 from sock import Sock
+from game_over import GameOver
 
 
 class SnakeGame(FloatLayout):
     head = ObjectProperty(Snake)
     sock = ObjectProperty(Sock)
     score = ObjectProperty(Score)
+    # g_over = ObjectProperty(GameOver)
     body = []
 
     def __init__(self):
@@ -128,3 +130,4 @@ class SnakeGame(FloatLayout):
                 self.add_body_part()
             if self.collision():
                 self.crashed = True
+                self.add_widget(GameOver())
