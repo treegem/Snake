@@ -1,14 +1,15 @@
 from kivy.vector import Vector
 from random import randint
 from snake import Snake
-from kivy.uix.widget import Widget
+from kivy.uix.image import Image
 
 
-class Sock(Widget):
+class Sock(Image):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.grid_width, self.grid_height = 0, 0
+        self.source = 'sock.png'
 
     def update_grid_width(self, value):
         self.grid_width = int(value / Snake.width.defaultvalue)

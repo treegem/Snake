@@ -66,9 +66,11 @@ class SnakeGame(FloatLayout):
 
     def on_width(self, instance, value):
         self.sock.update_grid_width(value)
+        self.sock.spawn()
 
     def on_height(self, instance, value):
         self.sock.update_grid_height(value)
+        self.sock.spawn()
 
     def sock_snacked(self):
         return self.head.pos == self.sock.pos
