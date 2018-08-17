@@ -10,5 +10,11 @@ class GameOver(Label):
         self.font_size = 50
         self.color = 1, 1, 1, 0.5
 
+    def on_texture_size(self, instance, value):
+        if self.parent:
+            while self.texture_size[0] > self.parent.width:
+                self.font_size -= 1
+                self.texture_update()
+
 
 

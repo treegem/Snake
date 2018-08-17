@@ -13,7 +13,7 @@ class SnakeGame(FloatLayout):
     head = ObjectProperty(Snake)
     sock = ObjectProperty(Sock)
     score = ObjectProperty(Score)
-    # g_over = ObjectProperty(GameOver)
+    g_over = ObjectProperty(GameOver())
     body = []
 
     def __init__(self):
@@ -53,6 +53,7 @@ class SnakeGame(FloatLayout):
         self.reset_histories()
         self.crashed = False
         self.score.reset()
+        self.remove_widget(self.g_over)
 
     def reset_body(self):
         for snek in self.body:
@@ -130,4 +131,4 @@ class SnakeGame(FloatLayout):
                 self.add_body_part()
             if self.collision():
                 self.crashed = True
-                self.add_widget(GameOver())
+                self.add_widget(self.g_over)

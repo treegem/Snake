@@ -17,5 +17,5 @@ class Sock(Widget):
         self.grid_height = int(value / Snake.height.defaultvalue)
 
     def spawn(self, forbidden_positions=[]):
-        self.pos = Vector(randint(0, self.grid_width - 1) * Snake.width.defaultvalue,
-                          randint(0, self.grid_height - 1) * Snake.height.defaultvalue)
+        self.pos = Vector(randint(0, max(1, self.grid_width - 1)) * Snake.width.defaultvalue,
+                          randint(0, max(1, self.grid_height - 1)) * Snake.height.defaultvalue)
